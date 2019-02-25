@@ -1,0 +1,255 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from echotheme.com/educati/page-career-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jan 2019 09:12:02 GMT -->
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Title-->
+    <title>Complete education theme for School, College, University, E-learning</title>
+    
+    <!-- SEO Meta-->
+    <meta name="description" content="Education theme by EchoTheme">
+    <meta name="keywords" content="HTML5 Education theme, responsive HTML5 theme, bootstrap 4, Clean Theme">
+    <meta name="author" content="education">
+    
+    <!-- viewport scale-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+     <!-- swet alert -->
+    <link href="{% static 'adminvw/plugins/sweet-alert/sweetalert.css' %}" rel="stylesheet">
+
+            
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon/114x114.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'assets/img/favicon/96x96.png' %}">
+    
+    
+    <!--Google fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700%7CWork+Sans:400,500">
+    
+    
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/themify-icons/css/themify-icons.css' %}">
+    
+    
+    <!-- stylesheet-->    
+    <link rel="stylesheet" href="{% static 'assets/css/vendors.bundle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    
+  </head>
+  
+  <body onload="validate()">
+  <input type="text" value="{{ pop }}" id="pop" hidden>
+   
+  {% include 'web/header.html' %}
+   
+   
+  <div class="py-5 bg-dark">
+    <div class="container">
+     <div class="row align-items-center">
+       <div class="col-md-6 text-white">
+         <h2>{{ data.post }}</h2>
+       </div>
+       <div class="col-md-6">
+        <ol class="breadcrumb justify-content-md-end bg-transparent">  
+          <li class="breadcrumb-item">
+            <a href="#">Home</a>
+          </li> 
+          <li class="breadcrumb-item">
+            <a href="#"> Page</a>
+          </li>
+          <li class="breadcrumb-item">
+            Job Apply
+          </li>
+        </ol>
+       </div>
+     </div>
+    </div> 
+  </div>
+
+
+ <section class="padding-y-120">
+   <div class="container">
+     <div class="row">
+       <div class="col-lg-6 mx-auto text-center">
+         <h2>
+          Apply For This Job
+        </h2>
+        <div class="width-3rem height-4 rounded bg-primary mx-auto mb-4"></div>
+        <p>
+          Prepare a PDF for your resume and fill the following form. We will contact you as soon as possible.
+        </p>
+       </div>
+       <div class="col-lg-9 mx-auto mt-5">
+         <form class="row"  method="POST" enctype="multipart/form-data">{% csrf_token %}
+           <div class="col-md-6 mb-4">
+             <input type="text" class="form-control rounded-pill" name="name" placeholder="Name" required>
+           </div>
+           <div class="col-md-6 mb-4">
+             <input type="email" class="form-control rounded-pill" name="email" placeholder="Email" required>
+           </div>
+           <div class="col-md-6 mb-4">
+              <input type="text" class="form-control rounded-pill" name="post" value="{{ data.post }}">
+           </div>
+           <div class="col-md-6 mb-4">
+             <input type="text" class="form-control rounded-pill" name="phone" placeholder="Phone">
+           </div>
+           <div class="col-md-6 mb-4">
+             <input type="text" class="form-control rounded-pill" name="location" placeholder="Location">
+           </div>
+           <div class="col-md-6 mb-4">
+             <input type="file" name="file" class="form-control rounded-pill">
+             <p style="color:red;">{{ msg }}</p>
+           </div>
+           <textarea type="text" class="form-control rounded-pill" rows="5" name="details" placeholder="More Info"></textarea>
+
+           <div class="col-12 mb-5 text-center">
+             <button type="submit" class="btn btn-primary">Submit Now</button>
+           </div>
+         </form>
+       </div>
+     </div> <!-- END row-->     
+   </div> <!-- END container-->
+ </section>
+
+
+
+
+ <section class="padding-y-100 bg-light-v4">
+   <div class="container">
+     <div class="row">
+       <div class="col-lg-9 col-md-8">
+         <div class="card padding-30 shadow-v1 marginTop-30">
+
+          <div class="mb-5">
+           <h4 class="mb-3">Job Description</h4>
+           <p>{{ data.description }}</p>
+          </div>
+
+          <div class="mb-5">
+           <h4 class="mb-3">Minimum Qualifications</h4>
+           <ul class="list-unstyled list-style-icon list-icon-bullet">
+            <li>{{ data.requirements }}</li>
+           </ul>
+          </div>
+
+          <div class="mb-5">
+           <h4 class="mb-3">Location :</h4>
+              {{ data.location }}
+         </div>
+         <div class="mb-5">
+           <h4 class="mb-3">Salary :</h4>
+              {{ data.salary }}
+         </div>
+       </div>
+       </div>
+     </div> <!-- END row-->
+   </div> <!-- END container-->
+ </section>
+
+
+<footer class="site-footer">
+  <div class="footer-top bg-dark text-white-0_6 pt-5 paddingBottom-100">
+    <div class="container"> 
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 mt-5">
+         <img src="{% static 'assets/img/logo-white.png' %}" alt="Logo">
+         <div class="margin-y-40">
+           <p>
+            Nunc placerat mi id nisi interdm they mtolis. Praesient is haretra justo ught scel erisque placer.
+          </p>
+         </div>
+          <ul class="list-inline"> 
+            <li class="list-inline-item"><a class="iconbox bg-white-0_2 hover:primary" href="#"><i class="ti-facebook"> </i></a></li>
+            <li class="list-inline-item"><a class="iconbox bg-white-0_2 hover:primary" href="#"><i class="ti-twitter"> </i></a></li>
+            <li class="list-inline-item"><a class="iconbox bg-white-0_2 hover:primary" href="#"><i class="ti-linkedin"> </i></a></li>
+            <li class="list-inline-item"><a class="iconbox bg-white-0_2 hover:primary" href="#"><i class="ti-pinterest"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mt-5">
+          <h4 class="h5 text-white">Contact Us</h4>
+          <div class="width-3rem bg-primary height-3 mt-3"></div>
+          <ul class="list-unstyled marginTop-40">
+            <li class="mb-3"><i class="ti-headphone mr-3"></i><a href="tel:+8801740411513">800 567.890.576 </a></li>
+            <li class="mb-3"><i class="ti-email mr-3"></i><a href="mailto:support@educati.com">support@educati.com</a></li>
+            <li class="mb-3">
+             <div class="media">
+              <i class="ti-location-pin mt-2 mr-3"></i>
+              <div class="media-body">
+                <span> 184 Main Collins Street Chicago, United States</span>
+              </div>
+             </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6 mt-5">
+          <h4 class="h5 text-white">Quick links</h4>
+          <div class="width-3rem bg-primary height-3 mt-3"></div>
+          <ul class="list-unstyled marginTop-40">
+            <li class="mb-2"><a href="page-about.html">About Us</a></li>
+            <li class="mb-2"><a href="page-contact.html">Contact Us</a></li>
+            <li class="mb-2"><a href="page-sp-student-profile.html">Students</a></li>
+            <li class="mb-2"><a href="page-sp-admission-apply.html">Admission</a></li>
+            <li class="mb-2"><a href="page-events.html">Events</a></li>
+            <li class="mb-2"><a href="blog-card.html">Latest News</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mt-5">
+          <h4 class="h5 text-white">Newslatter</h4>
+          <div class="width-3rem bg-primary height-3 mt-3"></div>
+          <div class="marginTop-40">
+            <p class="mb-4">Subscribe to get update and information. Don't worry, we won't send spam!</p>
+            <form class="marginTop-30" action="#" method="POST">
+              <div class="input-group">
+                <input type="text" placeholder="Enter your email" class="form-control py-3 border-white" required="">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Subscribe</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+      </div> <!-- END row-->
+    </div> <!-- END container-->
+  </div> <!-- END footer-top-->
+
+  <div class="footer-bottom bg-black-0_9 py-5 text-center">
+    <div class="container">
+      <p class="text-white-0_5 mb-0">&copy; 2018 Educati. All rights reserved. Created by <a href="http://echotheme.com/" target="_blunk">EchoTheme</a></p>
+    </div>
+  </div>  <!-- END footer-bottom-->
+</footer> <!-- END site-footer -->
+
+
+<div class="scroll-top">
+  <i class="ti-angle-up"></i>
+</div>
+     
+    <script src="{% static 'assets/js/vendors.bundle.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+
+     <!-- Sweet alert Plugin -->
+	<script src="{% static 'adminvw/plugins/sweet-alert/sweetalert.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/sweet-alert.js' %}"></script>
+
+  <script>
+    function validate() {
+        var pop = document.getElementById('pop').value;
+        if(pop=="add"){
+         swal('Success', 'Applied Successfully', 'success');}
+
+    }
+</script>
+  </body>
+
+<!-- Mirrored from echotheme.com/educati/page-career-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jan 2019 09:12:02 GMT -->
+</html>

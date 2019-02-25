@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from echotheme.com/educati/page-sp-faculty.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jan 2019 09:12:00 GMT -->
+<head>
+    <meta charset="UTF-8">
+    
+    <!-- Title-->
+    <title>Complete education theme for School, College, University, E-learning</title>
+    
+    <!-- SEO Meta-->
+    <meta name="description" content="Education theme by EchoTheme">
+    <meta name="keywords" content="HTML5 Education theme, responsive HTML5 theme, bootstrap 4, Clean Theme">
+    <meta name="author" content="education">
+    
+    <!-- viewport scale-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+            
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon/114x114.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'assets/img/favicon/96x96.png' %}">
+    
+    
+    <!--Google fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700%7CWork+Sans:400,500">
+    
+    
+    <!-- Icon fonts -->
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/themify-icons/css/themify-icons.css' %}">
+    
+    
+    <!-- stylesheet-->
+    <link rel="stylesheet" href="{% static 'assets/css/vendors.bundle.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    
+  </head>
+  
+  <body>
+   
+
+  {% include 'web/header.html' %}
+<h3>{{ data.department }}</h3>
+
+<div class="table-responsive my-4">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Faculty name</th>
+            <th scope="col">Designation</th>
+        </tr>
+        </thead>
+        {% for i in data %}
+        <tbody>
+        <tr>
+            <th scope="row" class="text-dark font-weight-semiBold" >{{ i.id }}</th>
+            <td>{{ i.name }}</td>
+            <td>{{ i.designation }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+
+
+   
+   
+
+{% include 'web/footer.html' %}
+
+
+<div class="scroll-top">
+  <i class="ti-angle-up"></i>
+</div>
+     
+    <script src="{% static 'assets/js/vendors.bundle.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+  </body>
+
+<!-- Mirrored from echotheme.com/educati/page-sp-faculty.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Jan 2019 09:12:00 GMT -->
+</html>

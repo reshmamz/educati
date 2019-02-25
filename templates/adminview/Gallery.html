@@ -1,0 +1,266 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<meta content="Start your development with a Dashboard for Bootstrap 4." name="description">
+	<meta content="Spruko" name="author">
+
+	<!-- Title -->
+	<title></title>
+
+	<!-- Favicon -->
+
+	<link href="{% static 'adminvw/img/brand/favicon.png' %}" rel="icon" type="image/png">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
+
+	<!-- Icons -->
+	<link href="{% static 'adminvw/css/icons.css' %}" rel="stylesheet">
+
+	<!--Bootstrap.min css-->
+	<link rel="stylesheet" href="{% static 'adminvw/plugins/bootstrap/css/bootstrap.min.css' %}">
+
+	<!-- Dashboard CSS -->
+	<link href="{% static 'adminvw/css/dashboard.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Tabs CSS -->
+	<link href="{% static 'adminvw/plugins/tabs/style.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Custom scroll bar css-->
+	<link href="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.css' %}" rel="stylesheet" />
+
+	<!-- Sidemenu Css -->
+	<link href="{% static 'adminvw/plugins/toggle-sidebar/css/sidemenu.css' %}" rel="stylesheet">
+    <!-- swet alert -->
+    <link href="{% static 'adminvw/plugins/sweet-alert/sweetalert.css' %}" rel="stylesheet">
+</head>
+<body onload="validate()" class="app sidebar-mini rtl" >
+<input type="text" value="{{ pop }}" id="pop" hidden>
+	<div id="global-loader" ></div>
+	<div class="page">
+		<div class="page-main">
+			{% include 'adminview/header.html' %}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Gallery</a></li>
+									<li class="breadcrumb-item active" aria-current="page">View</li>
+								</ol>
+								<div class="btn-group mb-0">
+									<button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#addgal">ADD</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Gallery</h2>
+										</div>
+										<div class="card-body">
+											<div class="table-responsive">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+													<thead>
+														<tr>
+															<th class="wd-15p">Title</th>
+															<th class="wd-15p">view</th>
+															<th class="wd-15p">Delete</th>
+														</tr>
+													</thead>
+                                                    <tbody>
+                                                    {% for i in gal %}
+                                                    <tr>
+                                                        <td >{{ i.title }}</td>
+                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewgal{{ i.id }}">View</button></td>
+
+                                                        <div class="modal fade" id="viewgal{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="viewgalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h2 class="modal-title" id="viewgalLabel">View Image</h2>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <img src="{{ i.pic.url }}"style="width: 350px;">
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                       <td><form method="post" id="dlt{{ i.id }}">{% csrf_token %}
+                                                                <input type="number" name="delegal" value="{{ i.id }}" hidden>
+                                                                <button type="button" class="btn btn-danger" onclick="deletedata({{ i.id }});">delete</button>
+                                                            </form></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+                                </div>
+							</div>
+
+                             <div class="modal fade" id="addgal" tabindex="-1" role="dialog" aria-labelledby="addgalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h2 class="modal-title" id="addgalLabel">Add Image</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+                                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<input type="text" class="form-control" name="title" placeholder="Enter Image Title" required>
+													</div>
+                                                    <div class="form-group">
+														<input type="file" class="form-control" name="imag" required>
+													</div>
+												</div>
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save</button>
+										</div>
+                                        </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+
+
+
+							<!-- Footer -->
+							<footer class="footer">
+								<div class="row align-items-center justify-content-xl-between">
+									<div class="col-xl-6">
+										<div class="copyright text-center text-xl-left text-muted">
+											<p class="text-sm font-weight-500">Copyright 2018 © All Rights Reserved. Ansta Dashboard Template</p>
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<p class="float-right text-sm font-weight-500">Designed &amp; Passion With: <a href="#">Spurko</a></p>
+									</div>
+								</div>
+							</footer>
+							<!-- Footer -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Ansta Scripts -->
+	<!-- Core -->
+	<script src="{% static 'adminvw/plugins/jquery/dist/jquery.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/popper.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Optional JS -->
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.extension.js' %}"></script>
+
+	<!-- Data tables -->
+	<script src="{% static 'adminvw/plugins/datatable/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/datatable/dataTables.bootstrap4.min.js' %}"></script>
+
+	<!-- Fullside-menu Js-->
+	<script src="{% static 'adminvw/plugins/toggle-sidebar/js/sidemenu.js' %}"></script>
+
+	<!-- Custom scroll bar Js-->
+	<script src="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+	<!-- Ansta JS -->
+	<script src="{% static 'adminvw/js/custom.js' %}"></script>
+    <!-- Sweet alert Plugin -->
+	<script src="{% static 'adminvw/plugins/sweet-alert/sweetalert.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/sweet-alert.js' %}"></script>
+
+    <script>
+		$(function(e) {
+			$('#example').DataTable();
+
+			var table = $('#example1').DataTable();
+			$('').click( function() {
+				var data = table.$('input, select').serialize();
+				alert(
+					"The following data would have been submitted to the server: \n\n"+
+					data.substr( 0, 120 )+'...'
+				);
+				return false;
+			});
+			$('#example2').DataTable( {
+				"scrollY":        "200px",
+				"scrollCollapse": true,
+				"paging":         false
+			});
+		} );
+
+	</script>
+    <script>
+        function deletedata(frm){
+          swal({
+			title: "Are you sure?",
+			text: "Your will not be able to recover this imaginary file!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: true
+		}, function() {
+              document.getElementById('dlt'+frm).submit()
+		});
+            return true;
+        }
+    </script>
+<script>
+    function validate() {
+        var pop = document.getElementById('pop').value;
+        if(pop=="add"){
+         swal('Success', 'Saved Successfully', 'success');}
+        if(pop=="delete"){
+         swal('Delete', 'Deleted Successfully', 'success');}
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#editco').submit(function() { // catch the form's submit event
+        $.ajax({ // create an AJAX call...
+            data: $(this).serialize(), // get the form data
+            type: $(this).attr('method'), // GET or POST
+            url: $(this).attr('action'), // the file to call
+            success: function(response) { // on success..
+                $('#success_div).html(response); // update the DIV
+            },
+            error: function(e, x, r) { // on error..
+                $('#error_div).html(e); // update the DIV
+            }
+        });
+        return false;
+    });
+});
+</script>
+</body>
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+</html>

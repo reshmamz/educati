@@ -1,0 +1,265 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<meta content="Start your development with a Dashboard for Bootstrap 4." name="description">
+	<meta content="Spruko" name="author">
+
+	<!-- Title -->
+	<title></title>
+
+	<!-- Favicon -->
+	<link href="{% static 'adminvw/img/brand/favicon.png' %}" rel="icon" type="image/png">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
+
+	<!-- Icons -->
+	<link href="{% static 'adminvw/css/icons.css' %}" rel="stylesheet">
+
+	<!--Bootstrap.min css-->
+	<link rel="stylesheet" href="{% static 'adminvw/plugins/bootstrap/css/bootstrap.min.css' %}">
+
+	<!-- Dashboard CSS -->
+	<link href="{% static 'adminvw/css/dashboard.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Tabs CSS -->
+	<link href="{% static 'adminvw/plugins/tabs/style.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Custom scroll bar css-->
+	<link href="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.css' %}" rel="stylesheet" />
+
+	<!-- Sidemenu Css -->
+	<link href="{% static 'adminvw/plugins/toggle-sidebar/css/sidemenu.css' %}" rel="stylesheet">
+
+    <!-- sweet alert -->
+    <link href="{% static 'adminvw/plugins/sweet-alert/sweetalert.css' %}" rel="stylesheet">
+
+</head>
+<body class="app sidebar-mini rtl" >
+	<div id="global-loader" ></div>
+	<div class="page">
+		<div class="page-main">
+			{% include 'adminview/header.html' %}
+
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Career</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Job applications</li>
+								</ol>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Career</h2>
+										</div>
+										<div class="card-body">
+											<div class="table-responsive">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+													<thead>
+														<tr>
+															<th class="wd-15p">Name</th>
+															<th class="wd-15p">applications</th>
+														</tr>
+													</thead>
+                                                    {% for i in app %}
+													<tbody>
+														<tr>
+															<td>{{ i.name }}</td>
+                                                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewappli{{ i.id }}">View</button></td>
+
+                                                            <div class="modal fade" id="viewappli{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="viewappliLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h2 class="modal-title" id="viewappliLabel">View Application </h2>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <form method="post">{% csrf_token %}
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Name:</label>
+                                                                                        <label class="form-control">{{ i.name }}</label>
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <label>Location:</label>
+                                                                                        <label class="form-control">{{ i.location }}</label>
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <label>Email:</label>
+                                                                                        <label class="form-control">{{ i.email }}</label>
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <label>Phone:</label>
+                                                                                        <label class="form-control">{{ i.phone }}</label>
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <label>Resume:</label>
+                                                                                        <label class="form-control"><a href="{{ i.cv.url }}">Download</a> </label>
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <label>Moreinfo:</label>
+                                                                                        <label class="form-control">{{ i.moreinfo }}</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <form method="post">{% csrf_token %}
+                                                                                    <input type="number" value="{{ i.id }}" name="delefac" hidden>
+                                                                                    <button type="submit" class="btn btn-danger">Delete</button></form>
+                                                                                <form method="post">{% csrf_token %}
+                                                                                    <input type="number" value="{{ i.id }}" name="accept" hidden>
+                                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#schedule{{ i.id }}">Accept</button></form>
+                                                                            </div>
+                                                                        </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+                                                            <div class="modal fade" id="schedule{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="scheduleLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h2 class="modal-title" id="scheduleLabel">Interview Schedule </h2>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <form method="post">{% csrf_token %}
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <input type="date" name="date" placeholder="Interview Date">
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <input type="time" name="time" placeholder="Interview time">
+                                                                                    </div>
+                                                                                     <div class="form-group">
+                                                                                        <input type="text" name="loc" placeholder="Location">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <form method="post" onload="validate()">{% csrf_token %}
+                                                                                    <input type="text" value="{{ pop }}" id="pop" hidden>
+                                                                                    <input type="number" value="{{ i.id }}" name="accept" hidden>
+                                                                                    <button type="submit" class="btn btn-primary" >Ok</button></form>
+                                                                            </div>
+                                                                        </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                             </div>
+
+														</tr>
+													</tbody>
+                                                    {% endfor %}
+												</table>
+											</div>
+										</div>
+									</div>
+                                </div>
+							</div>
+
+							<!-- Footer -->
+							<footer class="footer">
+								<div class="row align-items-center justify-content-xl-between">
+									<div class="col-xl-6">
+										<div class="copyright text-center text-xl-left text-muted">
+											<p class="text-sm font-weight-500">Copyright 2018 © All Rights Reserved. Ansta Dashboard Template</p>
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<p class="float-right text-sm font-weight-500">Designed &amp; Passion With: <a href="#">Spurko</a></p>
+									</div>
+								</div>
+							</footer>
+							<!-- Footer -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Ansta Scripts -->
+	<!-- Core -->
+	<script src="{% static 'adminvw/plugins/jquery/dist/jquery.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/popper.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Optional JS -->
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.extension.js' %}"></script>
+
+	<!-- Data tables -->
+	<script src="{% static 'adminvw/plugins/datatable/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/datatable/dataTables.bootstrap4.min.js' %}"></script>
+
+	<!-- Fullside-menu Js-->
+	<script src="{% static 'adminvw/plugins/toggle-sidebar/js/sidemenu.js' %}"></script>
+
+	<!-- Custom scroll bar Js-->
+	<script src="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+	<!-- Ansta JS -->
+	<script src="{% static 'adminvw/js/custom.js' %}"></script>
+
+     <!-- Sweet alert Plugin -->
+	<script src="{% static 'adminvw/plugins/sweet-alert/sweetalert.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/sweet-alert.js' %}"></script>
+
+
+     <script>
+		$(function(e) {
+			$('#example').DataTable();
+
+			var table = $('#example1').DataTable();
+			$('').click( function() {
+				var data = table.$('input, select').serialize();
+				alert(
+					"The following data would have been submitted to the server: \n\n"+
+					data.substr( 0, 120 )+'...'
+				);
+				return false;
+			});
+			$('#example2').DataTable( {
+				"scrollY":        "200px",
+				"scrollCollapse": true,
+				"paging":         false
+			});
+		} );
+
+	</script>
+ <script>
+    function validate() {
+        var pop = document.getElementById('pop').value;
+        if(pop=="add"){
+         swal('Success', 'Saved Successfully', 'success');}
+        if (pop=='delete'){
+            swal('Deleted','Deleted Successfully', 'success')
+        if(pop=="ok"){
+         swal('Saved', 'Saved Successfully', 'success');}
+        }
+    }
+    </script>
+
+</body>
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+</html>

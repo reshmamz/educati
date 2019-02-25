@@ -1,0 +1,357 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<meta content="Start your development with a Dashboard for Bootstrap 4." name="description">
+	<meta content="Spruko" name="author">
+
+	<!-- Title -->
+	<title></title>
+
+	<!-- Favicon -->
+	<link href="{% static 'adminvw/img/brand/favicon.png' %}" rel="icon" type="image/png">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
+
+	<!-- Icons -->
+	<link href="{% static 'adminvw/css/icons.css' %}" rel="stylesheet">
+
+	<!--Bootstrap.min css-->
+	<link rel="stylesheet" href="{% static 'adminvw/plugins/bootstrap/css/bootstrap.min.css' %}">
+
+	<!-- Dashboard CSS -->
+	<link href="{% static 'adminvw/css/dashboard.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Tabs CSS -->
+	<link href="{% static 'adminvw/plugins/tabs/style.css' %}" rel="stylesheet" type="text/css">
+
+	<!-- Custom scroll bar css-->
+	<link href="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.css' %}" rel="stylesheet" />
+
+	<!-- Sidemenu Css -->
+	<link href="{% static 'adminvw/plugins/toggle-sidebar/css/sidemenu.css' %}" rel="stylesheet">
+
+    <!-- sweet alert -->
+    <link href="{% static 'adminvw/plugins/sweet-alert/sweetalert.css' %}" rel="stylesheet">
+
+</head>
+<body onload="validate()" class="app sidebar-mini rtl" >
+<input type="text" value="{{ pop }}" id="pop" hidden>
+	<div id="global-loader" ></div>
+	<div class="page">
+		<div class="page-main">
+			{% include 'adminview/header.html' %}
+
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Career</a></li>
+									<li class="breadcrumb-item active" aria-current="page">View</li>
+								</ol>
+								<div class="btn-group mb-0">
+									<button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#addcar">ADD</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Career</h2>
+										</div>
+										<div class="card-body">
+											<div class="table-responsive">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+													<thead>
+														<tr>
+															<th class="wd-15p">Post Name</th>
+															<th class="wd-15p">Type</th>
+															<th class="wd-20p">Location</th>
+															<th class="wd-15p">Salary</th>
+															<th class="wd-15p">Last Date</th>
+															<th class="wd-15p">job description</th>
+															<th class="wd-15p">Qualification</th>
+															<th class="wd-15p">applicants</th>
+															<th class="wd-15p">Edit</th>
+															<th class="wd-15p">Delete</th>
+														</tr>
+													</thead>
+                                                    {% for i in car %}
+													<tbody>
+														<tr>
+															<td>{{ i.post }}</td>
+															<td>{{ i.type }}</td>
+															<td>{{ i.location }}</td>
+															<td>{{ i.salary }}</td>
+															<td>{{ i.lastdate }}</td>
+                                                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewjob{{ i.id }}">View</button></td>
+
+                                                            <div class="modal fade" id="viewjob{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="viewjobLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h2 class="modal-title" id="viewjobLabel">View job descrition</h2>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>{{ i.description }}</p>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+															<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewcar{{ i.id }}">View</button></td>
+
+                                                            <div class="modal fade" id="viewcar{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="viewcarLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h2 class="modal-title" id="viewcarLabel">View Career</h2>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>{{ i.requirements }}</p>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                            <td><button type="button"  class="btn btn-primary"><a href="/adminvw/career/application/{{ i.id }}/">View</a> </button></td>
+
+															<td><form method="post" id="#editcar" name="editcareer">{% csrf_token %}
+                                                                <input type="number" value="{{ i.id }}" name="editcarid" hidden>
+                                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editcar{{ i.id }}">Edit</button>
+                                                            </form> </td>
+
+
+
+
+															<td><form method="post" id="dlt{{ i.id }}">{% csrf_token %}
+                                                                <input type="number" name="dele" value="{{ i.id }}" hidden>
+                                                                <button type="button" class="btn btn-danger" onclick="deletedata({{ i.id }});">delete</button>
+                                                            </form></td>
+														</tr>
+
+                             <div class="modal fade" id="editcar{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="editcarLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h2 class="modal-title" id="editcarLabel">Edit Career</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+                                        <form method="post">{% csrf_token %}
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+                                                        <input type="number" value="{{ i.id }}" name="editcarid" hidden>
+														<input type="text" class="form-control" name="postname" placeholder="Enter Post Name" value="{{ i.post }}" required>
+													</div>
+													<div class="form-group">
+														<input type="text" class="form-control" name="type" placeholder="Type" value="{{ i.type }}" required>
+													</div>
+													<div class="form-group">
+														<input type="text" class="form-control" name="location" placeholder="Location" value="{{ i.location }}" required>
+													</div>
+                                                    <div class="form-group">
+														<input type="text" class="form-control" name="salary" placeholder="Salary" value="{{ i.salary }}" required>
+													</div>
+                                                    <div class="form-group">
+														<input type="date" class="form-control" name="date" placeholder="Last date to apply" value="{{ i.lastdate }}" required>
+													</div>
+												</div>
+                                                <div class="col-md-12">
+													<textarea class="form-control" rows="3" name="description" placeholder="Job Description" required>{{ i.description }}</textarea>
+												</div>
+												<div class="col-md-12">
+													<textarea class="form-control" rows="3" name="requirement" placeholder="Requirements" required>{{ i.requirements }}</textarea>
+												</div>
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save</button>
+										</div>
+                                        </div>
+                                        </form>
+									</div>
+								</div>
+                             </div>
+
+													</tbody>
+                                                    {% endfor %}
+												</table>
+											</div>
+										</div>
+									</div>
+                                </div>
+							</div>
+
+                             <div class="modal fade" id="addcar" tabindex="-1" role="dialog" aria-labelledby="addcarLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h2 class="modal-title" id="addcarLabel">Add Career</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+                                        <form method="post">{% csrf_token %}
+										<div class="modal-body">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<input type="text" class="form-control" name="post" placeholder="Enter Post Name" required>
+													</div>
+													<div class="form-group">
+														<input type="text" class="form-control" name="type" placeholder="Type" required>
+													</div>
+													<div class="form-group">
+														<input type="text" class="form-control" name="location" placeholder="Location" required>
+													</div>
+                                                    <div class="form-group">
+														<input type="text" class="form-control" name="salary" placeholder="Salary" required>
+													</div>
+                                                    <div class="form-group">
+														<input type="date" class="form-control" name="date" placeholder="Last date to apply" required>
+													</div>
+												</div>
+                                                <div class="col-md-12">
+													<textarea class="form-control" rows="3" name="description" placeholder="Job Description" required></textarea>
+												</div>
+												<div class="col-md-12">
+													<textarea class="form-control" rows="3" name="requirement" placeholder="Requirements" required></textarea>
+												</div>
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="submit" class="btn btn-primary">Save</button>
+										</div>
+                                        </div>
+                                        </form>
+									</div>
+								</div>
+							</div>
+							<!-- Footer -->
+							<footer class="footer">
+								<div class="row align-items-center justify-content-xl-between">
+									<div class="col-xl-6">
+										<div class="copyright text-center text-xl-left text-muted">
+											<p class="text-sm font-weight-500">Copyright 2018 © All Rights Reserved. Ansta Dashboard Template</p>
+										</div>
+									</div>
+									<div class="col-xl-6">
+										<p class="float-right text-sm font-weight-500">Designed &amp; Passion With: <a href="#">Spurko</a></p>
+									</div>
+								</div>
+							</footer>
+							<!-- Footer -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Ansta Scripts -->
+	<!-- Core -->
+	<script src="{% static 'adminvw/plugins/jquery/dist/jquery.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/popper.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Optional JS -->
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/chart.js/dist/Chart.extension.js' %}"></script>
+
+	<!-- Data tables -->
+	<script src="{% static 'adminvw/plugins/datatable/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'adminvw/plugins/datatable/dataTables.bootstrap4.min.js' %}"></script>
+
+	<!-- Fullside-menu Js-->
+	<script src="{% static 'adminvw/plugins/toggle-sidebar/js/sidemenu.js' %}"></script>
+
+	<!-- Custom scroll bar Js-->
+	<script src="{% static 'adminvw/plugins/customscroll/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+	<!-- Ansta JS -->
+	<script src="{% static 'adminvw/js/custom.js' %}"></script>
+
+     <!-- Sweet alert Plugin -->
+	<script src="{% static 'adminvw/plugins/sweet-alert/sweetalert.min.js' %}"></script>
+	<script src="{% static 'adminvw/js/sweet-alert.js' %}"></script>
+
+
+     <script>
+		$(function(e) {
+			$('#example').DataTable();
+
+			var table = $('#example1').DataTable();
+			$('').click( function() {
+				var data = table.$('input, select').serialize();
+				alert(
+					"The following data would have been submitted to the server: \n\n"+
+					data.substr( 0, 120 )+'...'
+				);
+				return false;
+			});
+			$('#example2').DataTable( {
+				"scrollY":        "200px",
+				"scrollCollapse": true,
+				"paging":         false
+			});
+		} );
+
+	</script>
+    <script>
+        function deletedata(frm){
+          swal({
+			title: "Are you sure?",
+			text: "Your will not be able to recover this imaginary file!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: true
+		}, function() {
+              document.getElementById('dlt'+frm).submit()
+		});
+            return true;
+        }
+    </script>
+   <script>
+    function validate() {
+        var pop = document.getElementById('pop').value;
+        if(pop=="add"){
+         swal('Success', 'Saved Successfully', 'success');}
+        if (pop=='delete'){
+            swal('Deleted','Deleted Successfully', 'success')
+        if(pop=="edit"){
+         swal('Saved', 'Saved Successfully', 'success');}
+        }
+    }
+    </script>
+
+</body>
+
+<!-- Mirrored from spruko.com/demo/ansta/datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Dec 2018 04:48:29 GMT -->
+</html>
